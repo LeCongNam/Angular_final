@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
 import { ProductService } from '../../service/product.service';
-import { Product } from "../../model/Product.model";
+// import { Product } from "../../model/Product.model";
 
 
 @Component({
@@ -16,23 +17,28 @@ export class ContentComponent implements OnInit {
     this.getListProduct()
    }
 
+  
+  ngOnInit(): void {
+
+  }
+
+
+  // lấy thông tin sản phẩm từ firebase thông qua service ProductService là service của firebase
   getListProduct() {
     this.productService.getAllProduct().subscribe((data: any) => {
       this.Products = data.map((item: any) => item)
     })
   }
 
-  ngOnInit(): void {
-
-  }
 
 
-
-  //============ Cách Thêm và xoá item
+  //============ Cách Thêm và xoá item   =====================
   id:number=0
   add(item:any){
-    let {id, ...data} = item
-    this.productService.create(data)
+    // let {id, ...data} = item
+    delete item.id
+    console.log(item);
+    this.productService.create(item)
   }
 
   deleteProduct(id:any){
